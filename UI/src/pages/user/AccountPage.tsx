@@ -8,12 +8,13 @@ import { authService } from '@/services/auth.service';
 import type { User as UserProfile } from '@/types/domain';
 import { useTranslation } from 'react-i18next';
 import { setLanguage } from '@/i18n';
+import { getStoredUser } from '@/lib/auth';
 
 export const AccountPage: React.FC = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [notify, setNotify] = useState(true);
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(() => getStoredUser<UserProfile>() ?? null);
   const [toast, setToast] = useState({ show: false, message: '' });
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const AccountPage: React.FC = () => {
     } catch {
       setToast({ show: true, message: 'Unable to log out.' });
     } finally {
-      navigate('/login');
+      navigate(routePaths.user.login);
     }
   };
 

@@ -20,7 +20,7 @@ const useMockAuth = () => {
 export const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useMockAuth();
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={routePaths.user.login} replace />;
   }
   return <>{children}</>;
 };
@@ -28,7 +28,7 @@ export const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children 
 export const RequireAdmin: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, user } = useMockAuth();
   if (!isAuthenticated || user.role !== 'admin') {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={routePaths.user.login} replace />;
   }
   return <>{children}</>;
 };

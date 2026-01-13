@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Bell, LogOut, Menu, Search } from 'lucide-react';
 import { AdminSidebar } from './components/AdminSidebar';
-import { Button, Modal } from '@/components/ui';
+import { Button } from '@/components/ui';
+import { BottomSheet } from '@/components/common/BottomSheet';
 import { useTranslation } from 'react-i18next';
 import { authService } from '@/services/auth.service';
+import { routePaths } from '@/routes/routePaths';
+import { clearAuthToken, clearStoredUser } from '@/lib/auth';
 
 export const AdminLayout: React.FC = () => {
   const { t } = useTranslation();
@@ -25,8 +28,10 @@ export const AdminLayout: React.FC = () => {
   const handleLogout = async () => {
     try {
       await authService.logout();
+      clearAuthToken();
+      clearStoredUser();
     } finally {
-      navigate('/login');
+      navigate(routePaths.user.login);
     }
   };
 
@@ -51,7 +56,7 @@ export const AdminLayout: React.FC = () => {
           />
         </div>
         <div className="flex items-center space-x-4">
-          <Button variant="outline" size="sm" onClick={() => navigate('/home')}>
+          <Button variant="outline" size="sm" onClick={() => navigate(routePaths.user.home)}>
             {t('admin.backToApp')}
           </Button>
           <button className="relative p-2 text-slate-400 hover:text-slate-600">
@@ -70,7 +75,7 @@ export const AdminLayout: React.FC = () => {
       </main>
     </div>
 
-    <Modal
+    <BottomSheet
       isOpen={drawerOpen}
       onClose={() => setDrawerOpen(false)}
       className="md:hidden !items-stretch !justify-start"
@@ -94,7 +99,7 @@ export const AdminLayout: React.FC = () => {
           ))}
         </nav>
       </div>
-    </Modal>
+    </BottomSheet>
   </div>
   );
 };

@@ -1,5 +1,6 @@
 export const routePaths = {
   user: {
+    login: '/login',
     home: '/home',
     voucher: '/voucher',
     voucherDetail: (id: string) => `/voucher/${id}`,
