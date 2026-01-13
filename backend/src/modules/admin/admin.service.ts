@@ -4,6 +4,11 @@ import * as bcrypt from 'bcryptjs';
 import { formatCurrency } from '../../common/utils/format';
 import { OrderStatus, WithdrawalStatus, TicketStatus } from '@prisma/client';
 
+import { CreateBannerDto } from './dto/create-banner.dto';
+import { UpdateBannerDto } from './dto/update-banner.dto';
+import { CreateHomeSectionDto } from './dto/create-home-section.dto';
+import { UpdateHomeSectionDto } from './dto/update-home-section.dto';
+
 @Injectable()
 export class AdminService {
   constructor(private prisma: PrismaService) {}
@@ -30,9 +35,7 @@ export class AdminService {
   }
 
   async listUsers() {
-    const users = await this.prisma.user.findMany({
-      orderBy: { createdAt: 'desc' },
-    });
+    const users = await this.prisma.user.findMany({ orderBy: { createdAt: 'desc' } });
     const ledger = await this.prisma.ledger.findMany();
 
     return users.map((user) => {
@@ -43,6 +46,7 @@ export class AdminService {
           if (entry.type === 'withdrawal') return sum - entry.amount;
           return sum;
         }, 0);
+
       return {
         id: user.id,
         name: user.name,
@@ -101,6 +105,7 @@ export class AdminService {
       include: { store: true },
       orderBy: { createdAt: 'desc' },
     });
+
     return vouchers.map((voucher) => ({
       id: voucher.id,
       title: voucher.title,
@@ -149,9 +154,7 @@ export class AdminService {
   }
 
   async listWithdrawals() {
-    const withdrawals = await this.prisma.withdrawal.findMany({
-      orderBy: { date: 'desc' },
-    });
+    const withdrawals = await this.prisma.withdrawal.findMany({ orderBy: { date: 'desc' } });
     return withdrawals.map((item) => ({
       id: item.id,
       user: item.user,
@@ -192,6 +195,7 @@ export class AdminService {
       maintenanceMode: false,
       allowRegistrations: true,
     };
+
     const setting = await this.prisma.settings.findUnique({ where: { id: 1 } });
     if (setting) {
       const { minWithdrawal, signUpBonus, referralBonus, cashbackHoldDays, maintenanceMode, allowRegistrations } = setting;
@@ -209,48 +213,60 @@ export class AdminService {
       maintenanceMode: false,
       allowRegistrations: true,
     };
+
     const updated = await this.prisma.settings.upsert({
       where: { id: 1 },
       update: payload,
       create: { id: 1, ...defaults, ...payload },
     });
+
     const { minWithdrawal, signUpBonus, referralBonus, cashbackHoldDays, maintenanceMode, allowRegistrations } = updated;
     return { minWithdrawal, signUpBonus, referralBonus, cashbackHoldDays, maintenanceMode, allowRegistrations };
   }
 
+  // ===== BANNERS =====
   listBanners() {
     return this.prisma.banner.findMany({ orderBy: [{ priority: 'desc' }, { createdAt: 'desc' }] });
   }
 
-  createBanner(payload: Record<string, any>) {
-    const defaults = {
-      title: 'Untitled Banner',
-      subtitle: '',
-      imageUrl: '',
-      ctaText: '',
-      ctaUrl: '',
-      bgClass: 'bg-gradient-to-r from-blue-500 to-indigo-600',
-      textClass: 'text-white',
-      isActive: true,
-      priority: 0,
-    };
+  createBanner(payload: CreateBannerDto) {
     return this.prisma.banner.create({
       data: {
-        ...defaults,
-        ...payload,
+        title: payload.title,
+        subtitle: payload.subtitle,
+        imageUrl: payload.imageUrl,
+        ctaText: payload.ctaText,
+        ctaUrl: payload.ctaUrl,
+        bgClass: payload.bgClass,
+        textClass: payload.textClass,
+        isActive: payload.isActive ?? true,
+        priority: payload.priority ?? 0,
         startsAt: payload.startsAt ? new Date(payload.startsAt) : null,
         endsAt: payload.endsAt ? new Date(payload.endsAt) : null,
       },
     });
   }
 
-  updateBanner(id: string, payload: Record<string, any>) {
+  updateBanner(id: string, payload: UpdateBannerDto) {
+    const startsAt =
+      payload.startsAt === undefined ? undefined : payload.startsAt ? new Date(payload.startsAt) : null;
+    const endsAt =
+      payload.endsAt === undefined ? undefined : payload.endsAt ? new Date(payload.endsAt) : null;
+
     return this.prisma.banner.update({
       where: { id },
       data: {
-        ...payload,
-        startsAt: payload.startsAt ? new Date(payload.startsAt) : undefined,
-        endsAt: payload.endsAt ? new Date(payload.endsAt) : undefined,
+        ...(payload.title !== undefined ? { title: payload.title } : {}),
+        ...(payload.subtitle !== undefined ? { subtitle: payload.subtitle } : {}),
+        ...(payload.imageUrl !== undefined ? { imageUrl: payload.imageUrl } : {}),
+        ...(payload.ctaText !== undefined ? { ctaText: payload.ctaText } : {}),
+        ...(payload.ctaUrl !== undefined ? { ctaUrl: payload.ctaUrl } : {}),
+        ...(payload.bgClass !== undefined ? { bgClass: payload.bgClass } : {}),
+        ...(payload.textClass !== undefined ? { textClass: payload.textClass } : {}),
+        ...(payload.isActive !== undefined ? { isActive: payload.isActive } : {}),
+        ...(payload.priority !== undefined ? { priority: payload.priority } : {}),
+        ...(startsAt !== undefined ? { startsAt } : {}),
+        ...(endsAt !== undefined ? { endsAt } : {}),
       },
     });
   }
@@ -259,25 +275,34 @@ export class AdminService {
     return this.prisma.banner.delete({ where: { id } });
   }
 
+  // ===== HOME SECTIONS =====
   listHomeSections() {
     return this.prisma.homeSection.findMany({ orderBy: [{ priority: 'desc' }, { createdAt: 'desc' }] });
   }
 
-  createHomeSection(payload: Record<string, any>) {
-    const key = payload.key ?? `section-${Date.now()}`;
+  createHomeSection(payload: CreateHomeSectionDto) {
     return this.prisma.homeSection.create({
       data: {
-        key,
-        title: payload.title ?? key,
-        config: payload.config ?? {},
+        key: payload.key,
+        title: payload.title,
         isActive: payload.isActive ?? true,
         priority: payload.priority ?? 0,
+        config: (payload as any).config ?? {},
       },
     });
   }
 
-  updateHomeSection(id: string, payload: Record<string, any>) {
-    return this.prisma.homeSection.update({ where: { id }, data: payload });
+  updateHomeSection(id: string, payload: UpdateHomeSectionDto) {
+    return this.prisma.homeSection.update({
+      where: { id },
+      data: {
+        ...(payload.key !== undefined ? { key: payload.key } : {}),
+        ...(payload.title !== undefined ? { title: payload.title } : {}),
+        ...(payload.isActive !== undefined ? { isActive: payload.isActive } : {}),
+        ...(payload.priority !== undefined ? { priority: payload.priority } : {}),
+        ...(payload.config !== undefined ? { config: payload.config as any } : {}),
+      },
+    });
   }
 
   deleteHomeSection(id: string) {
