@@ -1,0 +1,28 @@
+export const routePaths = {
+  user: {
+    home: '/home',
+    voucher: '/voucher',
+    voucherDetail: (id: string) => `/voucher/${id}`,
+    pasteLink: '/paste-link',
+    wallet: '/wallet',
+    orders: '/orders',
+    withdraw: '/withdraw',
+    account: '/account',
+    profile: '/profile',
+    referral: '/referral',
+    checkin: '/checkin',
+    support: '/support',
+    notifications: '/notifications',
+  },
+  admin: {
+    dashboard: '/admin/dashboard',
+    users: '/admin/users',
+    stores: '/admin/stores',
+    offers: '/admin/offers',
+    orders: '/admin/orders',
+    withdrawals: '/admin/withdrawals',
+    banners: '/admin/banners',
+    homeSections: '/admin/home-sections',
+    settings: '/admin/settings',
+  },
+};

@@ -1,0 +1,109 @@
+{
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English"
+  },
+  "login": {
+    "title": "Chào mừng trở lại",
+    "subtitle": "Đăng nhập để tiếp tục",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "cta": "Đăng nhập",
+    "demo": "Tiếp tục với bản demo"
+  },
+  "home": {
+    "availableBalance": "Số dư khả dụng",
+    "withdraw": "Rút tiền",
+    "pending": "Đang chờ",
+    "withdrawn": "Đã rút",
+    "dailyCheckin": "Điểm danh mỗi ngày",
+    "dayStreak": "Chuỗi ngày",
+    "checkIn": "Điểm danh",
+    "done": "Đã xong",
+    "featuredDeals": "Ưu đãi nổi bật",
+    "topStores": "Cửa hàng nổi bật",
+    "hotVouchers": "Mã giảm giá hot",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép",
+    "shop": "Mua sắm"
+  },
+  "voucher": {
+    "title": "Voucher của tôi",
+    "searchPlaceholder": "Tìm theo cửa hàng hoặc ưu đãi...",
+    "sort": "Sắp xếp",
+    "noResults": "Không tìm thấy voucher",
+    "clearFilters": "Xóa bộ lọc",
+    "details": "Chi tiết voucher",
+    "terms": "Điều khoản & điều kiện",
+    "copyCode": "Sao chép mã",
+    "shopEarn": "Mua sắm & nhận thưởng"
+  },
+  "pasteLink": {
+    "title": "Chuyển link thành cashback",
+    "subtitle": "Dán link sản phẩm từ cửa hàng hỗ trợ để tạo link cashback.",
+    "placeholder": "https://shopee.com/product/...",
+    "generate": "Tạo link",
+    "tips": "Mẹo nhanh",
+    "successTitle": "Kích hoạt cashback!",
+    "shopNow": "Mua ngay để nhận thưởng",
+    "copy": "Sao chép",
+    "share": "Chia sẻ",
+    "tryAgain": "Thử lại"
+  },
+  "wallet": {
+    "title": "Ví",
+    "help": "Trợ giúp",
+    "totalBalance": "Tổng số dư",
+    "myOrders": "Đơn hàng của tôi",
+    "myVouchers": "Voucher của tôi",
+    "history": "Lịch sử giao dịch",
+    "viewAll": "Xem tất cả"
+  },
+  "orders": {
+    "title": "Đơn hàng của tôi",
+    "noOrders": "Chưa có đơn",
+    "selectOrder": "Chọn đơn để xem chi tiết",
+    "details": "Chi tiết đơn hàng",
+    "report": "Báo sự cố"
+  },
+  "withdraw": {
+    "title": "Rút tiền",
+    "submitted": "Yêu cầu đã gửi",
+    "backToWallet": "Quay lại ví",
+    "destination": "Điểm nhận",
+    "amount": "Số tiền",
+    "review": "Xem lại yêu cầu",
+    "confirm": "Xác nhận & rút"
+  },
+  "account": {
+    "title": "Tài khoản",
+    "walletCashback": "Ví & Cashback",
+    "growth": "Tăng trưởng",
+    "settingsSupport": "Cài đặt & hỗ trợ",
+    "myWallet": "Ví của tôi",
+    "myOrders": "Đơn hàng của tôi",
+    "savedLinks": "Liên kết đã lưu",
+    "dailyCheckin": "Điểm danh mỗi ngày",
+    "referFriends": "Mời bạn bè",
+    "myProfile": "Hồ sơ của tôi",
+    "helpCenter": "Trung tâm trợ giúp",
+    "notifications": "Thông báo",
+    "logout": "Đăng xuất",
+    "language": "Ngôn ngữ",
+    "adminPanel": "Quản trị"
+  },
+  "admin": {
+    "dashboard": "Bảng điều khiển",
+    "users": "Người dùng",
+    "stores": "Cửa hàng",
+    "offers": "Ưu đãi",
+    "orders": "Đơn hàng",
+    "withdrawals": "Rút tiền",
+    "banners": "Banner",
+    "homeSections": "Khối trang chủ",
+    "settings": "Cài đặt",
+    "search": "Tìm kiếm...",
+    "logout": "Đăng xuất",
+    "backToApp": "Quay lại ứng dụng"
+  }
+}

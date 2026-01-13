@@ -1,0 +1,221 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum OrderStatus {
+  Pending
+  Reviewing
+  Available
+  Rejected
+}
+
+enum VoucherType {
+  percent
+  fixed
+  shipping
+}
+
+enum VoucherCategory {
+  Fashion
+  Tech
+  Food
+  Travel
+}
+
+enum LedgerType {
+  earning
+  withdrawal
+  bonus
+}
+
+enum LedgerStatus {
+  pending
+  completed
+  failed
+}
+
+enum NotificationType {
+  info
+  success
+  alert
+}
+
+enum TicketStatus {
+  Open
+  Resolved
+  Closed
+}
+
+enum ReferralStatus {
+  Registered
+  Shopped
+}
+
+enum WithdrawalStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  phone        String?
+  avatarUrl    String?
+  role         Role     @default(user)
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  clicks        Click[]
+  ledgerEntries Ledger[]
+}
+
+model Store {
+  id           String   @id @default(cuid())
+  name         String
+  initials     String
+  color        String
+  cashbackUpTo Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  vouchers Voucher[]
+}
+
+model Voucher {
+  id        String          @id @default(cuid())
+  storeId   String
+  title     String
+  code      String
+  expiry    String
+  type      VoucherType
+  category  VoucherCategory
+  isHot     Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  store Store @relation(fields: [storeId], references: [id])
+}
+
+model Click {
+  id        String   @id @default(uuid())
+  userId    String?
+  url       String
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  storeName   String
+  orderNumber String
+  date        DateTime    @default(now())
+  amount      Float
+  cashback    Float
+  status      OrderStatus @default(Pending)
+  timeline    Json
+}
+
+model Ledger {
+  id     String       @id @default(cuid())
+  userId String
+  title  String
+  date   DateTime     @default(now())
+  amount Float
+  type   LedgerType
+  status LedgerStatus @default(pending)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Withdrawal {
+  id      String           @id @default(cuid())
+  userId  String
+  user    String
+  method  String
+  details String
+  amount  Float
+  date    DateTime         @default(now())
+  status  WithdrawalStatus @default(Pending)
+}
+
+model Notification {
+  id      String           @id @default(cuid())
+  userId  String
+  title   String
+  message String
+  time    String
+  read    Boolean          @default(false)
+  type    NotificationType @default(info)
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  userId      String
+  subject     String
+  status      TicketStatus @default(Open)
+  date        DateTime     @default(now())
+  lastMessage String
+  user        String
+}
+
+model Referral {
+  id       String         @id @default(cuid())
+  userId   String
+  name     String
+  status   ReferralStatus
+  earnings Float
+  date     DateTime       @default(now())
+}
+
+model Settings {
+  id                 Int     @id @default(1)
+  minWithdrawal      String
+  signUpBonus        String
+  referralBonus      String
+  cashbackHoldDays   String
+  maintenanceMode    Boolean @default(false)
+  allowRegistrations Boolean @default(true)
+}
+
+model Banner {
+  id        String    @id @default(cuid())
+  title     String
+  subtitle  String
+  imageUrl  String
+  ctaText   String
+  ctaUrl    String
+  bgClass   String
+  textClass String
+  isActive  Boolean   @default(true)
+  priority  Int       @default(0)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model HomeSection {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  title     String
+  isActive  Boolean  @default(true)
+  priority  Int      @default(0)
+  config    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

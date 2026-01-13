@@ -1,0 +1,109 @@
+{
+  "lang": {
+    "vi": "Tiếng Việt",
+    "en": "English"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to continue",
+    "email": "Email",
+    "password": "Password",
+    "cta": "Login",
+    "demo": "Continue with demo"
+  },
+  "home": {
+    "availableBalance": "Available Balance",
+    "withdraw": "Withdraw",
+    "pending": "Pending",
+    "withdrawn": "Withdrawn",
+    "dailyCheckin": "Daily Check-in",
+    "dayStreak": "Day Streak",
+    "checkIn": "Check In",
+    "done": "Done",
+    "featuredDeals": "Featured Deals",
+    "topStores": "Top Stores",
+    "hotVouchers": "Hot Vouchers",
+    "copy": "Copy",
+    "copied": "Copied",
+    "shop": "Shop"
+  },
+  "voucher": {
+    "title": "My Vouchers",
+    "searchPlaceholder": "Search by store or offer...",
+    "sort": "Sort",
+    "noResults": "No vouchers found",
+    "clearFilters": "Clear Filters",
+    "details": "Voucher Details",
+    "terms": "Terms & Conditions",
+    "copyCode": "Copy Code",
+    "shopEarn": "Shop & Earn"
+  },
+  "pasteLink": {
+    "title": "Convert Link to Cashback",
+    "subtitle": "Paste a product link from any supported store to generate your cashback link.",
+    "placeholder": "https://shopee.com/product/...",
+    "generate": "Generate Link",
+    "tips": "Quick Tips",
+    "successTitle": "Cashback Activated!",
+    "shopNow": "Shop Now to Earn",
+    "copy": "Copy",
+    "share": "Share",
+    "tryAgain": "Try Again"
+  },
+  "wallet": {
+    "title": "Wallet",
+    "help": "Help",
+    "totalBalance": "Total Balance",
+    "myOrders": "My Orders",
+    "myVouchers": "My Vouchers",
+    "history": "Transaction History",
+    "viewAll": "View all history"
+  },
+  "orders": {
+    "title": "My Orders",
+    "noOrders": "No orders",
+    "selectOrder": "Select an order to view details.",
+    "details": "Order Details",
+    "report": "Report an Issue"
+  },
+  "withdraw": {
+    "title": "Withdraw Funds",
+    "submitted": "Request Submitted",
+    "backToWallet": "Back to Wallet",
+    "destination": "Destination",
+    "amount": "Amount",
+    "review": "Review Withdrawal",
+    "confirm": "Confirm & Withdraw"
+  },
+  "account": {
+    "title": "Account",
+    "walletCashback": "Wallet & Cashback",
+    "growth": "Growth",
+    "settingsSupport": "Settings & Support",
+    "myWallet": "My Wallet",
+    "myOrders": "My Orders",
+    "savedLinks": "Saved Links",
+    "dailyCheckin": "Daily Check-in",
+    "referFriends": "Refer Friends",
+    "myProfile": "My Profile",
+    "helpCenter": "Help Center",
+    "notifications": "Notifications",
+    "logout": "Log Out",
+    "language": "Language",
+    "adminPanel": "Admin Panel"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "stores": "Stores",
+    "offers": "Offers",
+    "orders": "Orders",
+    "withdrawals": "Withdrawals",
+    "banners": "Banners",
+    "homeSections": "Home Sections",
+    "settings": "Settings",
+    "search": "Search...",
+    "logout": "Logout",
+    "backToApp": "Back to App"
+  }
+}
