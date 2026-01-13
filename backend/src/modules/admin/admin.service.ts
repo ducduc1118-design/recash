@@ -223,8 +223,20 @@ export class AdminService {
   }
 
   createBanner(payload: Record<string, any>) {
+    const defaults = {
+      title: 'Untitled Banner',
+      subtitle: '',
+      imageUrl: '',
+      ctaText: '',
+      ctaUrl: '',
+      bgClass: 'bg-gradient-to-r from-blue-500 to-indigo-600',
+      textClass: 'text-white',
+      isActive: true,
+      priority: 0,
+    };
     return this.prisma.banner.create({
       data: {
+        ...defaults,
         ...payload,
         startsAt: payload.startsAt ? new Date(payload.startsAt) : null,
         endsAt: payload.endsAt ? new Date(payload.endsAt) : null,
@@ -252,7 +264,16 @@ export class AdminService {
   }
 
   createHomeSection(payload: Record<string, any>) {
-    return this.prisma.homeSection.create({ data: payload });
+    const key = payload.key ?? `section-${Date.now()}`;
+    return this.prisma.homeSection.create({
+      data: {
+        key,
+        title: payload.title ?? key,
+        config: payload.config ?? {},
+        isActive: payload.isActive ?? true,
+        priority: payload.priority ?? 0,
+      },
+    });
   }
 
   updateHomeSection(id: string, payload: Record<string, any>) {
